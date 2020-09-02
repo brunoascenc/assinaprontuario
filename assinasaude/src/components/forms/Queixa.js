@@ -1,12 +1,12 @@
 import React from "react";
+import Select from "react-select";
 
-const Queixa = ({ queixa }) => {
+
+const Queixa = ({ queixa}) => {
   return (
     <div>
       <label htmlFor="queixa">Queixa Principal</label>
-      <select name="queixa">
-        <option value="">{queixa}</option>
-      </select>
+      <Select options={queixa} />
     </div>
   );
 };

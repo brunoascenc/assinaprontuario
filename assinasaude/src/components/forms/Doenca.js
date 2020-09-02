@@ -1,12 +1,11 @@
 import React from "react";
+import Select from "react-select";
 
-const Doenca = ({ doenca }) => {
+const Doenca = ({ doenca}) => {
   return (
     <div>
       <label htmlFor="doenca">Doenças Adulto</label>
-      <select name="doenca">
-        <option value="">{doenca}</option>
-      </select>
+      <Select options={doenca} />
     </div>
   );
 };

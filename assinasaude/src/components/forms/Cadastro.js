@@ -1,9 +1,8 @@
 import React from "react";
-
 import Doenca from "./Doenca";
 import Queixa from "./Queixa";
 
-const Cadastro = ({ queixa, doenca }) => {
+const Cadastro = ({ queixa, doenca}) => {
   return (
     <form>
       <header>Anamnese</header>

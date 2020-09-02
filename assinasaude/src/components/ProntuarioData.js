@@ -8,22 +8,22 @@ const ProntuarioData = () => {
   const [doencas, setDoencas] = useState([]);
 
   const getData = () => {
-    const queixasAPI = "https://assina-prontuario.herokuapp.com/queixas";
-    const doencasAPI = "https://assina-prontuario.herokuapp.com/doencas";
-
-    const getQueixas = axios.get(queixasAPI);
-    const getDoencas = axios.get(doencasAPI);
-    axios.all([getQueixas, getDoencas]).then(
-      axios.spread((...sintomasData) => {
-        const queixaData = sintomasData[0].data;
-        const doencaData = sintomasData[1].data;
-        const queixaNames = queixaData.data[0].label;
-        const doencaNames = doencaData.data[0].label;
-
+    axios
+      .all([
+        axios.get("https://assina-prontuario.herokuapp.com/queixas"),
+        axios.get("https://assina-prontuario.herokuapp.com/doencas"),
+      ])
+      .then((res) => {
+        const queixaData = res[0].data;
+        const doencaData = res[1].data;
+        const queixaNames = queixaData.data;
+        const doencaNames = doencaData.data;
         setQueixas(queixaNames);
         setDoencas(doencaNames);
       })
-    );
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
