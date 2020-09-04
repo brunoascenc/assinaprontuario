@@ -1,38 +1,54 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 
-import Cadastro from "./forms/Cadastro";
+import "../App.css";
+import useSintomasAPI from "./forms/useSintomasAPI";
+import useSelectedName from "./forms/useSelectedName";
+import Prontuario from './forms/Prontuario'
 
 const ProntuarioData = () => {
-  const [queixas, setQueixas] = useState([]);
-  const [doencas, setDoencas] = useState([]);
 
-  const getData = () => {
-    axios
-      .all([
-        axios.get("https://assina-prontuario.herokuapp.com/queixas"),
-        axios.get("https://assina-prontuario.herokuapp.com/doencas"),
-      ])
-      .then((res) => {
-        const queixaData = res[0].data;
-        const doencaData = res[1].data;
-        const queixaNames = queixaData.data;
-        const doencaNames = doencaData.data;
-        setQueixas(queixaNames);
-        setDoencas(doencaNames);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
+  const [queixa, doenca] = useSintomasAPI();
+  const [
+    selectedQueixa,
+    selectedDoenca,
+    handleQueixa,
+    handleDoenca,
+  ] = useSelectedName();
 
   return (
     <div>
-      <Cadastro queixa={queixas} doenca={doencas} />
+      <form>
+        <header>Anamnese</header>
+        <div>
+          <label htmlFor="queixa">Queixa Principal</label>
+          <select onChange={handleQueixa}>
+            <option defaultValue>Selecione...</option>
+            {queixa.map((item) => {
+              return <option key={item.id}>{item.label}</option>;
+            })}
+          </select>
+
+          <label htmlFor="doenca">Doenças Adulto</label>
+          <select onChange={handleDoenca}>
+            <option defaultValue>Selecione...</option>
+            {doenca.map((item) => {
+              return <option key={item.id}>{item.label}</option>;
+            })}
+          </select>
+        </div>
+        <h3>Sintomas: </h3>
+        <div>
+          {selectedQueixa}
+          {selectedDoenca}
+        </div>
+        <label htmlFor="historico">Histórico da Moléstia</label>
+        <textarea name="historico" cols="30" rows="10"></textarea>
+        <button>Enviar</button>
+      </form>
+      <Prontuario
+        selectedQueixa={selectedQueixa}
+        selectedDoenca={selectedDoenca}
+      />
     </div>
   );
 };

@@ -10,3 +10,10 @@
   justify-content: center;
   flex-direction: column;
 }
+
+form{
+  display: flex;
+  flex-direction: column;
+}
+
+.Select-option.is-selected { display: none; }
