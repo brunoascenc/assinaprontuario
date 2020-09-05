@@ -3,16 +3,16 @@ import React from "react";
 import "../App.css";
 import useSintomasAPI from "./forms/useSintomasAPI";
 import useSelectedName from "./forms/useSelectedName";
-import Prontuario from './forms/Prontuario'
+// import Prontuario from './forms/Prontuario'
 
 const ProntuarioData = () => {
-
   const [queixa, doenca] = useSintomasAPI();
   const [
     selectedQueixa,
-    selectedDoenca,
     handleQueixa,
     handleDoenca,
+    doencaNames,
+    handleRemoveChip,
   ] = useSelectedName();
 
   return (
@@ -38,17 +38,36 @@ const ProntuarioData = () => {
         </div>
         <h3>Sintomas: </h3>
         <div>
-          {selectedQueixa}
-          {selectedDoenca}
+          {doencaNames.length > 0 &&
+            doencaNames.map((doencaName) => {
+              return (
+                <div className="item">
+                  <p>{doencaName}</p>{" "}
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleRemoveChip(doencaName);
+                    }}
+                  >
+                    X
+                  </button>
+                </div>
+              );
+            })}
+          <div>
+            {selectedQueixa}
+            {/* {inputValue} */}
+            {/* {doencaNames} */}
+          </div>
         </div>
         <label htmlFor="historico">Histórico da Moléstia</label>
         <textarea name="historico" cols="30" rows="10"></textarea>
         <button>Enviar</button>
       </form>
-      <Prontuario
+      {/* <Prontuario
         selectedQueixa={selectedQueixa}
-        selectedDoenca={selectedDoenca}
-      />
+        selectedDoenca={doencaNames}
+      /> */}
     </div>
   );
 };

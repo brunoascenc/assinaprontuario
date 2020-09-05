@@ -23,7 +23,9 @@ const useSintomasAPI = () => {
        .catch((error) => {
          console.log(error);
        });
-   };
+  };
+  
+  
 
    useEffect(() => {
      getData();

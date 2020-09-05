@@ -1,19 +1,29 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-.App{
+.App {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 }
 
-form{
+form {
   display: flex;
   flex-direction: column;
 }
 
-.Select-option.is-selected { display: none; }
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  height: 1.5em;
+  margin: 0.1em;
+  padding: 0 0.15em;
+}
