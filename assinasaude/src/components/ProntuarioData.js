@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import "../App.css";
 import useSintomasAPI from "./forms/useSintomasAPI";
@@ -12,8 +12,15 @@ const ProntuarioData = () => {
     handleQueixa,
     handleDoenca,
     doencaNames,
-    handleRemoveChip,
+    setDoencaNames,
+    // handleRemoveChip
   ] = useSelectedName();
+
+  const handleRemoveDoenca = (name) => {
+    const newList = doencaNames.filter((item) => item !== name);
+
+    setDoencaNames(newList);
+  };
 
   return (
     <div>
@@ -39,14 +46,14 @@ const ProntuarioData = () => {
         <h3>Sintomas: </h3>
         <div>
           {doencaNames.length > 0 &&
-            doencaNames.map((doencaName) => {
+            doencaNames.map((item) => {
               return (
                 <div className="item">
-                  <p>{doencaName}</p>{" "}
+                  <p>{item}</p>
                   <button
                     onClick={(e) => {
                       e.preventDefault();
-                      handleRemoveChip(doencaName);
+                      handleRemoveDoenca(item)
                     }}
                   >
                     X
@@ -55,7 +62,7 @@ const ProntuarioData = () => {
               );
             })}
           <div>
-            {selectedQueixa}
+            <p>{selectedQueixa}</p>
             {/* {inputValue} */}
             {/* {doencaNames} */}
           </div>

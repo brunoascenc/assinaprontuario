@@ -12,9 +12,12 @@ const useSelectedName = () => {
     setDoencaNames([...newNames]);
   };
 
-  const handleRemoveChip = (name) => {
-    setDoencaNames(doencaNames.filter((item) => item.name !== name));
-  };
+  // const handleRemoveChip = (name) => {
+  //   const newList = doencaNames.filter((item) => item !== name);
+
+  //   setDoencaNames(newList);
+  // };
+
 
   const handleQueixa = (event) => {
     setSelectedQueixa(event.target.value);
@@ -25,7 +28,8 @@ const useSelectedName = () => {
     handleQueixa,
     handleDoenca,
     doencaNames,
-    handleRemoveChip,
+    setDoencaNames
+    // handleRemoveChip
   ];
 };
 
