@@ -1,80 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useCallback } from "react";
 
 import "../App.css";
-import useSintomasAPI from "./forms/useSintomasAPI";
-import useSelectedName from "./forms/useSelectedName";
-// import Prontuario from './forms/Prontuario'
+import SelectedSintomas from "./forms/SelectedSintomas";
 
 const ProntuarioData = () => {
-  const [queixa, doenca] = useSintomasAPI();
-  const [
-    selectedQueixa,
-    handleQueixa,
-    handleDoenca,
-    doencaNames,
-    setDoencaNames,
-    // handleRemoveChip
-  ] = useSelectedName();
+  const minCharacters = useRef(null);
+  const [minChars, setMinChars] = useState("");
 
-  const handleRemoveDoenca = (name) => {
-    const newList = doencaNames.filter((item) => item !== name);
-
-    setDoencaNames(newList);
-  };
+  const handleSubmit = useCallback((e) => {
+    e.preventDefault();
+    if (minCharacters.current.value.length < 5) {
+      setMinChars("min 20");
+    }
+  }, []);
 
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <header>Anamnese</header>
-        <div>
-          <label htmlFor="queixa">Queixa Principal</label>
-          <select onChange={handleQueixa}>
-            <option defaultValue>Selecione...</option>
-            {queixa.map((item) => {
-              return <option key={item.id}>{item.label}</option>;
-            })}
-          </select>
-
-          <label htmlFor="doenca">Doenças Adulto</label>
-          <select onChange={handleDoenca}>
-            <option defaultValue>Selecione...</option>
-            {doenca.map((item) => {
-              return <option key={item.id}>{item.label}</option>;
-            })}
-          </select>
-        </div>
-        <h3>Sintomas: </h3>
-        <div>
-          {doencaNames.length > 0 &&
-            doencaNames.map((item) => {
-              return (
-                <div className="item">
-                  <p>{item}</p>
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleRemoveDoenca(item)
-                    }}
-                  >
-                    X
-                  </button>
-                </div>
-              );
-            })}
-          <div>
-            <p>{selectedQueixa}</p>
-            {/* {inputValue} */}
-            {/* {doencaNames} */}
-          </div>
-        </div>
+        <SelectedSintomas />
         <label htmlFor="historico">Histórico da Moléstia</label>
-        <textarea name="historico" cols="30" rows="10"></textarea>
+        <textarea
+          ref={minCharacters}
+          name="historico"
+          cols="30"
+          rows="10"
+        ></textarea>
+        {minChars}
         <button>Enviar</button>
       </form>
-      {/* <Prontuario
-        selectedQueixa={selectedQueixa}
-        selectedDoenca={doencaNames}
-      /> */}
     </div>
   );
 };

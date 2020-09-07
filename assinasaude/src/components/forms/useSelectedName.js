@@ -3,7 +3,6 @@ import _ from "lodash";
 
 const useSelectedName = () => {
   const [selectedQueixa, setSelectedQueixa] = useState([]);
-
   const [doencaNames, setDoencaNames] = useState([]);
 
   const handleDoenca = (e) => {
@@ -12,15 +11,11 @@ const useSelectedName = () => {
     setDoencaNames([...newNames]);
   };
 
-  // const handleRemoveChip = (name) => {
-  //   const newList = doencaNames.filter((item) => item !== name);
-
-  //   setDoencaNames(newList);
-  // };
-
-
-  const handleQueixa = (event) => {
-    setSelectedQueixa(event.target.value);
+  const handleQueixa = (e) => {
+    let valuesQueixa = [...e.target.selectedOptions].map((opt) => opt.value);
+    const newQueixas = _.union(selectedQueixa, valuesQueixa);
+    newQueixas.length = 1;
+    setSelectedQueixa([...newQueixas]);
   };
 
   return [
@@ -28,8 +23,8 @@ const useSelectedName = () => {
     handleQueixa,
     handleDoenca,
     doencaNames,
-    setDoencaNames
-    // handleRemoveChip
+    setDoencaNames,
+    setSelectedQueixa
   ];
 };
 
